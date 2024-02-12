@@ -22,7 +22,7 @@ jobs:
       # Python環境を構築する
       - uses: actions/setup-python@v4
         with:
-          python-version: 3.12
+          python-version: 3.11
       # Poetryをインストールする
       - run: pip install poetry
       # ライブラリをインストールする
