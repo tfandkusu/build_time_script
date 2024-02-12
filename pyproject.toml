@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "build-time-script"
+version = "0.1.0"
+description = "ビルドを10回行った平均と標準偏差を比較するためのスクリプト"
+authors = ["Haruhiko Takada <haruhiko.takada@gmail.com>"]
+license = "Resources"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.1.1"
+pyproject-flake8 = "^6.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.flake8]
+max-line-length = 88
+ignore = "E203"
+exclude = ".venv"
