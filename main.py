@@ -1,10 +1,11 @@
 import os
 import time
 import subprocess
+import polars as pl
 
-build_count = 3
+build_count = 10
 project_dir = os.path.join(os.environ["HOME"], "work/KmmGithubSearch")
-commits = ["main"]  # ["main", "b92a835c4fdb35fbf4f77e86559bd2d50f334cc0"]
+commits = ["main", "b92a835c"]
 pre_build_command = """
 ./gradlew clean && cd iosApp && bundle exec fastlane clean
 """
@@ -17,11 +18,11 @@ def run_command(command: str):
     subprocess.run(command, shell=True, check=True)
 
 
-build_times = []
-
+build_times = {}
+original_dir = os.getcwd()
 os.chdir(project_dir)
 for commit in commits:
-    build_times.append([])
+    build_times[commit] = []
     for i in range(build_count + 1):
         run_command(f"git checkout {commit}")
         run_command(pre_build_command)
@@ -30,6 +31,8 @@ for commit in commits:
         end_time = time.time()
         build_time = end_time - start_time
         if i >= 1:
-            build_times[-1].append(build_time)
+            build_times[commit].append(build_time)
 
-print(build_times)
+df = pl.DataFrame(build_times)
+os.chdir(original_dir)
+df.write_excel("build_time.xlsx")

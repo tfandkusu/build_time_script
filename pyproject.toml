@@ -8,6 +8,8 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
+polars = "^0.20.8"
+xlsxwriter = "^3.1.9"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.1.1"
